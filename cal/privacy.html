@@ -30,9 +30,6 @@
   <p>The photo itself is not stored. Calvin keeps a one-way hash of it alongside the resulting food list for 24 hours, so retrying the same photo does not cost another scan. The hash cannot be turned back into your picture.</p>
   <p>To make results match what you actually eat, Calvin also sends the names and per-serving nutrition of up to 30 of your most recently used saved foods with the request, so a recognized item can be matched to your own product and your own numbers. No other part of your log is sent, and this is only sent on Plus photo scans.</p>
 
-  <h3>Receipt scanning</h3>
-  <p>Receipt photos are read entirely on your device. The image never leaves your phone. Only the cleaned item text, for example "greek yogurt", may be sent to look up nutrition. Store names, addresses, card numbers, and other receipt details are not sent.</p>
-
   <h3>Food and barcode lookups</h3>
   <p>Searching for a food or scanning a barcode sends the search text or the barcode number to Calvin's server, which looks it up in a public USDA product database, and to <a href="https://openfoodfacts.org">Open Food Facts</a> if nothing is found. These requests carry only the search text or barcode.</p>
 
@@ -42,16 +39,17 @@
   <h2>Apple Health</h2>
   <p>If you connect Apple&nbsp;Health, Calvin reads activity, energy, and weight data to show trends and import weigh-ins. Apple&nbsp;Health data is read on your device, stays on your device, and is not sent to Calvin's server or anywhere else.</p>
 
-  <h2>Google Health Connect and Fitbit</h2>
-  <p>This connection is optional and off unless you turn it on. It works differently from Apple&nbsp;Health, because the data comes from Google's servers rather than your phone.</p>
-  <p>If you connect it, Calvin's server stores:</p>
+  <h2>Google Health Connect, Fitbit, Whoop, and Hevy</h2>
+  <p>These connections are optional and off unless you turn them on. They work differently from Apple&nbsp;Health, because the data comes from the provider's servers rather than from your phone.</p>
+  <p>If you connect one, Calvin's server stores:</p>
   <table>
     <tr><th>Data</th><th>Kept</th></tr>
-    <tr><td>Google access and refresh tokens</td><td>Until you disconnect</td></tr>
-    <tr><td>Daily steps, active calories, distance, and weight</td><td>Until you disconnect</td></tr>
+    <tr><td>Access and refresh tokens for the provider you connected</td><td>Until you disconnect</td></tr>
+    <tr><td>Daily steps, active calories, distance, and weight (Google&nbsp;Health and Fitbit)</td><td>Until you disconnect</td></tr>
+    <tr><td>Workouts: name, start and end time, calories, and Whoop's strain score (Whoop and Hevy)</td><td>Until you disconnect</td></tr>
   </table>
   <p>This data is stored against your device identifier, not your name or email.</p>
-  <p>Disconnecting in Settings erases all of it. The stored tokens are deleted, every synced activity and weight row for your device is deleted, and Calvin asks Google to revoke the connection so the grant cannot be reused. Nothing is retained for later.</p>
+  <p>Disconnecting in Settings erases all of it. The stored tokens are deleted, every synced activity, weight, and workout row for your device is deleted, and where the provider supports it Calvin asks them to revoke the connection so the grant cannot be reused. Rows left behind by a connection that can no longer be reached are deleted on a schedule. Nothing is retained for later.</p>
 
   <h2>Purchases</h2>
   <p>Calvin&nbsp;Plus subscriptions are processed entirely by Apple through the App&nbsp;Store. Calvin never sees your payment details.</p>
@@ -63,7 +61,7 @@
   <p>Calvin uses Apple's on-device MetricKit for crash and performance diagnostics. These reports are handled by Apple's standard, opt-in mechanisms. Calvin operates no collection service of its own.</p>
 
   <h2>Your rights</h2>
-  <p>Deleting the app removes everything stored on your device. The only personal data Calvin's server ever holds is the Google&nbsp;Health data described above, and disconnecting erases it. If you want anything else removed, or want confirmation that it is gone, email the address below.</p>
+  <p>Deleting the app removes everything stored on your device. The only personal data Calvin's server ever holds is the connected-service data described above, and disconnecting erases it. If you want anything else removed, or want confirmation that it is gone, email the address below.</p>
 
   <h2>Contact</h2>
   <p>Questions? Email <a href="mailto:kmestrada6@gmail.com">kmestrada6@gmail.com</a>.</p>
