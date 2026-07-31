@@ -62,8 +62,35 @@
   body {
     font-family: var(--rounded);
     background: var(--bg); color: var(--ink);
-    line-height: 1.6; margin: 0; padding: 0 1.25rem;
+    line-height: 1.6; margin: 0; padding: 0;
     -webkit-font-smoothing: antialiased;
+  }
+  .wrap, .nav-inner { padding-left: 1.25rem; padding-right: 1.25rem; }
+
+  /* Sticky bar keeps the store badge reachable from anywhere on the page —
+     the one thing every app site gets right and this page was missing. */
+  .nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-inner {
+    max-width: 60rem; margin: 0 auto; height: 3.9rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 0.55rem;
+    font-weight: 700; font-size: 1.06rem; letter-spacing: -0.015em;
+    color: var(--ink); text-decoration: none; margin-right: auto;
+  }
+  .brand img { width: 1.65rem; height: 1.65rem; border-radius: 0.42rem; display: block; }
+  .nav a.nav-link { color: var(--muted); text-decoration: none; font-size: 0.94rem; }
+  .nav a.nav-link:hover { color: var(--ink); }
+  .nav .badge img { height: 2.1rem; }
+  .nav .pending { display: none; }
+  @media (max-width: 40rem) {
+    .nav a.nav-link { display: none; }
   }
   .wrap { max-width: 60rem; margin: 0 auto; }
   a { color: var(--accent); }
@@ -123,6 +150,27 @@
   ul.features p { margin: 0; color: var(--muted); font-size: 0.95rem; }
   ul.features li { border-top: 2px solid var(--rule); padding-top: 0.9rem; }
 
+  /* Alternating screenshot rows. A named feature is a claim; the screen is
+     the evidence. Rows flip so the eye has somewhere to go. */
+  .look { display: grid; gap: 2rem; align-items: center; margin-bottom: 3.25rem; }
+  .look:last-child { margin-bottom: 0; }
+  @media (min-width: 46rem) {
+    .look { grid-template-columns: 15rem 1fr; gap: 3.5rem; }
+    /* Reordering the figure alone would leave the narrow track under the
+       prose. Swap the track widths to match the new order. */
+    .look.flip { grid-template-columns: 1fr 15rem; }
+    .look.flip > figure { order: 2; }
+  }
+  .look figure { margin: 0; }
+  .look img {
+    width: 100%; max-width: 15rem; height: auto; display: block; margin: 0 auto;
+    border-radius: 1.5rem; border: 1px solid var(--rule);
+    box-shadow: 0 1rem 2.25rem -0.75rem rgba(0,0,0,0.2);
+  }
+  .look h3 { font-size: 1.32rem; margin-bottom: 0.55rem; }
+  .look p { color: var(--muted); margin: 0 0 0.75rem; max-width: 32rem; }
+  .look p:last-child { margin-bottom: 0; }
+
   .prose { max-width: 38rem; }
 
   .callout {
@@ -154,6 +202,22 @@
 </style>
 </head>
 <body>
+
+<div class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="/">
+      <img src="/img/icon.png" alt="" width="180" height="180">
+      Calvin
+    </a>
+    <a class="nav-link" href="#free">Features</a>
+    <a class="nav-link" href="#privacy">Privacy</a>
+    <a class="nav-link" href="/support.html">Support</a>
+    <span class="badge" aria-disabled="true" title="Coming soon to the App Store">
+      <img src="/img/app-store-badge.svg" alt="Download on the App Store — coming soon" width="120" height="40">
+    </span>
+  </div>
+</div>
+
 <div class="wrap">
 
   <header>
@@ -211,6 +275,46 @@
   </section>
 
   <section>
+    <h2>A closer look</h2>
+
+    <div class="look">
+      <figure>
+        <img src="/img/log-food.png" width="416" height="900"
+             alt="Calvin's log screen: a search field, Photo scan, Barcode and Recipes buttons, and a row of foods usually eaten at lunch.">
+      </figure>
+      <div>
+        <h3>Logging that gets out of the way</h3>
+        <p>Search, scan a barcode, or pick from what you usually eat at this time of day. Calvin learns your patterns, so the food you want is normally already on screen.</p>
+        <p>Macros fill in automatically. Adjust servings and you're done.</p>
+      </div>
+    </div>
+
+    <div class="look flip">
+      <figure>
+        <img src="/img/weight-trend.png" width="416" height="900"
+             alt="Calvin's weight screen showing a smoothed trend line through daily weigh-ins.">
+      </figure>
+      <div>
+        <h3>A target that corrects itself</h3>
+        <p>Daily weight is noisy — water, salt, sleep. Calvin fits a trend line through it and reads your real rate of change.</p>
+        <p>Then it works backwards to your actual maintenance calories. Log imperfectly and the number still converges, because the scale is the thing being trusted, not your logging.</p>
+      </div>
+    </div>
+
+    <div class="look">
+      <figure>
+        <img src="/img/activity.png" width="416" height="900"
+             alt="Calvin's activity screen showing steps, active energy and workouts imported from Apple Health.">
+      </figure>
+      <div>
+        <h3>Movement counted once</h3>
+        <p>Steps, active energy and workouts come from Apple&nbsp;Health, so what you burn is folded into the day without double-counting a workout you already logged.</p>
+        <p>Fitbit, Whoop and Hevy connect directly if you use them.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy">
     <h2>No account, no ads</h2>
     <div class="callout">
       <p>There is no sign-up and no login. Your food log lives on your phone, not on a server &mdash; and Calvin does not sell, share, or advertise against it.</p>
