@@ -67,7 +67,7 @@
   }
   .wrap, .nav-inner { padding-left: 1.25rem; padding-right: 1.25rem; }
 
-  /* Sticky bar keeps the store badge reachable from anywhere on the page —
+  /* Sticky bar keeps the brand and the section links reachable from anywhere —
      the one thing every app site gets right and this page was missing. */
   .nav {
     position: sticky; top: 0; z-index: 10;
@@ -87,14 +87,12 @@
   .brand img { width: 1.65rem; height: 1.65rem; border-radius: 0.42rem; display: block; }
   .nav a.nav-link { color: var(--muted); text-decoration: none; font-size: 0.94rem; }
   .nav a.nav-link:hover { color: var(--ink); }
-  .nav .badge img { height: 2.1rem; }
-  .nav .pending { display: none; }
   @media (max-width: 40rem) {
     .nav a.nav-link { display: none; }
   }
   .wrap { max-width: 60rem; margin: 0 auto; }
   a { color: var(--accent); }
-  a:focus-visible, .badge:focus-visible {
+  a:focus-visible {
     outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
   }
 
@@ -120,19 +118,29 @@
     box-shadow: 0 1.5rem 3rem -1rem rgba(0,0,0,0.22);
   }
 
-  /* Store badge. Apple's own artwork — their guidelines do not allow a
-     redrawn one. Not a link until the app is released: the App Store URL
-     404s until then. TO ACTIVATE ON RELEASE: swap <span class="badge"> for
-     <a class="badge" href="https://apps.apple.com/app/id6790968217"> and
-     delete the .pending note. */
-  .store { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
-  .badge { display: inline-block; line-height: 0; }
-  .badge img { height: 2.75rem; width: auto; display: block; }
-  .badge[aria-disabled="true"] img { opacity: 0.4; }
-  @media (prefers-color-scheme: dark) { .badge img { filter: invert(1); } }
-  :root[data-theme="dark"] .badge img { filter: invert(1); }
-  :root[data-theme="light"] .badge img { filter: none; }
-  .pending { font-size: 0.92rem; color: var(--muted); }
+  /* No App Store badge until the app ships.
+     Apple's identity guidelines forbid modifying the badge, and every way of
+     signalling "not yet" modifies it: dimming it is a modification, and so is
+     inverting it for dark mode. The badge also has to be a working link to a
+     product page, and ours 404s until release. A dimmed, unlinked badge broke
+     three rules at once, so this is plain type instead.
+
+     ON RELEASE, replace .coming in the hero, nav and closing section with:
+       <a href="https://apps.apple.com/app/id6790968217">
+         <img src="/img/app-store-badge.svg" alt="Download on the App Store"
+              width="120" height="40">
+       </a>
+     Rules to keep: at least 40px tall onscreen, clear space around it of at
+     least a quarter of its height, and no filter, opacity or recolour of any
+     kind — including in dark mode. img/app-store-badge.svg is Apple's own
+     artwork, already in the repo. */
+  .coming {
+    font-family: var(--serif); font-style: italic;
+    font-size: 1.02rem; color: var(--muted); margin: 0;
+  }
+  .coming strong { font-family: var(--rounded); font-style: normal; color: var(--ink); font-weight: 650; }
+  .nav .coming { font-size: 0.92rem; }
+  @media (max-width: 40rem) { .nav .coming { display: none; } }
 
   section { padding: 3rem 0; border-top: 1px solid var(--rule); }
   h2 {
@@ -212,9 +220,7 @@
     <a class="nav-link" href="#free">Features</a>
     <a class="nav-link" href="#privacy">Privacy</a>
     <a class="nav-link" href="/support.html">Support</a>
-    <span class="badge" aria-disabled="true" title="Coming soon to the App Store">
-      <img src="/img/app-store-badge.svg" alt="Download on the App Store — coming soon" width="120" height="40">
-    </span>
+    <p class="coming">Coming soon</p>
   </div>
 </div>
 
@@ -225,12 +231,7 @@
       <p class="eyebrow">for iPhone &amp; Apple&nbsp;Watch</p>
       <h1>A calorie tracker that keeps the basics free.</h1>
       <p class="lede">Barcode scanning and food search are free here. Most trackers moved them behind a subscription. Calvin does not.</p>
-      <div class="store">
-        <span class="badge" aria-disabled="true">
-          <img src="/img/app-store-badge.svg" alt="Download on the App Store" width="120" height="40">
-        </span>
-        <span class="pending">Coming soon</span>
-      </div>
+      <p class="coming"><strong>Coming soon</strong> to the App&nbsp;Store, for iPhone and Apple&nbsp;Watch.</p>
     </div>
     <img class="shot" src="/img/dashboard.png" width="416" height="900"
          alt="Calvin's dashboard: a ring showing 500 kcal left of the day's target, with protein, fiber and sugar bars and the day's meals listed below.">
@@ -335,12 +336,7 @@
   <section class="closing">
     <h2>Log your first meal in five seconds</h2>
     <p>Free to start, no account to make.</p>
-    <div class="store">
-      <span class="badge" aria-disabled="true">
-        <img src="/img/app-store-badge.svg" alt="Download on the App Store" width="120" height="40">
-      </span>
-      <span class="pending">Coming soon</span>
-    </div>
+    <p class="coming"><strong>Coming soon</strong> to the App&nbsp;Store.</p>
   </section>
 
   <footer>
