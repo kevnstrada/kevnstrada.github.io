@@ -3,19 +3,178 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calvin</title>
+<title>Calvin — a calorie tracker that keeps the basics free</title>
+<meta name="description" content="Calvin is a calorie and nutrition tracker for iPhone and Apple Watch. Barcode scanning and food search are free, there is no account, and your food log stays on your phone.">
+<meta property="og:title" content="Calvin">
+<meta property="og:description" content="A calorie tracker that keeps the basics free. No account. Your log stays on your phone.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://calvinhealth.com">
 <style>
-  body { font: 17px/1.6 -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-         max-width: 34rem; margin: 4rem auto; padding: 0 1.25rem; color: #1c1c1e; }
-  a { color: #0a7ea4; }
-  @media (prefers-color-scheme: dark) {
-    body { background: #000; color: #f2f2f7; } a { color: #64d2ff; }
+  /* Palette taken from the app's asset catalog so the site and the app agree:
+     AccentColor #4A7C59 / #8FBF9C, LaunchBackground #F7F6F1 / #121412. */
+  :root {
+    --bg: #f7f5ee;
+    --surface: #fffefa;
+    --ink: #2b2b26;
+    --muted: #6b6b60;
+    --rule: #ddd8c8;
+    --accent: #4a7c59;
   }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121412;
+      --surface: #1b1e1b;
+      --ink: #ecebe4;
+      --muted: #9c9c90;
+      --rule: #2f342f;
+      --accent: #8fbf9c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121412; --surface: #1b1e1b; --ink: #ecebe4;
+    --muted: #9c9c90; --rule: #2f342f; --accent: #8fbf9c;
+  }
+  :root[data-theme="light"] {
+    --bg: #f7f5ee; --surface: #fffefa; --ink: #2b2b26;
+    --muted: #6b6b60; --rule: #ddd8c8; --accent: #4a7c59;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, Georgia, serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0 1.25rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 42rem; margin: 0 auto; }
+  a { color: var(--accent); }
+
+  header { padding: 4.5rem 0 3rem; }
+  .mark {
+    display: inline-block; font-size: 0.75rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem;
+  }
+  h1 {
+    font-style: italic; font-weight: 600; font-size: clamp(2.1rem, 7vw, 3rem);
+    line-height: 1.15; margin: 0 0 1rem;
+  }
+  .lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 2rem; max-width: 32rem; }
+
+  .cta {
+    display: inline-block; padding: 0.7rem 1.4rem; border-radius: 999px;
+    background: var(--accent); color: var(--bg); text-decoration: none;
+    font-weight: 600; font-size: 0.98rem;
+  }
+  .cta-note { margin-top: 0.85rem; font-size: 0.9rem; color: var(--muted); }
+
+  section { padding: 2.5rem 0; border-top: 1px solid var(--rule); }
+  h2 {
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); font-weight: 600; margin: 0 0 1.25rem;
+  }
+  h3 { font-size: 1.05rem; margin: 0 0 0.35rem; font-weight: 600; }
+
+  ul.features { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.4rem; }
+  @media (min-width: 34rem) { ul.features { grid-template-columns: 1fr 1fr; gap: 1.6rem 2.5rem; } }
+  ul.features p { margin: 0; color: var(--muted); font-size: 0.96rem; }
+
+  .callout {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 0.75rem; padding: 1.4rem 1.5rem;
+  }
+  .callout p:last-child { margin-bottom: 0; }
+
+  .plus { list-style: none; padding: 0; margin: 0; }
+  .plus li { padding-left: 1.3rem; position: relative; margin-bottom: 0.5rem; color: var(--muted); }
+  .plus li::before { content: "+"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  footer {
+    border-top: 1px solid var(--rule); padding: 2rem 0 3.5rem;
+    font-size: 0.9rem; color: var(--muted);
+  }
+  footer nav { margin-bottom: 0.75rem; }
+  footer nav a { margin-right: 1.25rem; }
 </style>
 </head>
 <body>
-<h1>Calvin</h1>
-<p>A calorie and nutrition tracker for iPhone and Apple&nbsp;Watch.</p>
-<p><a href="/privacy.html">Privacy Policy</a> &middot; <a href="/support.html">Help &amp; Support</a></p>
+<div class="wrap">
+
+  <header>
+    <span class="mark">Calvin for iPhone &amp; Apple&nbsp;Watch</span>
+    <h1>A calorie tracker that keeps the basics free.</h1>
+    <p class="lede">Barcode scanning and food search are free here. Most trackers moved them behind a subscription. Calvin does not.</p>
+    <a class="cta" href="#free">See what's free</a>
+    <p class="cta-note">Coming to the App&nbsp;Store.</p>
+  </header>
+
+  <section id="free">
+    <h2>Free, and staying free</h2>
+    <ul class="features">
+      <li>
+        <h3>Barcode scanning</h3>
+        <p>Point at a packaged food and log it. No paywall, no scan limit.</p>
+      </li>
+      <li>
+        <h3>Food database search</h3>
+        <p>USDA Branded, with Open&nbsp;Food&nbsp;Facts as a fallback.</p>
+      </li>
+      <li>
+        <h3>Full macros</h3>
+        <p>Protein, carbs, fat, fiber, sugar and sodium on every entry.</p>
+      </li>
+      <li>
+        <h3>Log in under five seconds</h3>
+        <p>Recents, usuals and common foods are one tap. Copy yesterday's whole log when today is empty.</p>
+      </li>
+      <li>
+        <h3>Weight trend</h3>
+        <p>A smoothed trend line instead of the daily noise the scale gives you.</p>
+      </li>
+      <li>
+        <h3>Adaptive calorie target</h3>
+        <p>Maintenance calories are back-calculated from your real weight trend, so imperfect logging self-corrects against the scale.</p>
+      </li>
+      <li>
+        <h3>Apple Health sync</h3>
+        <p>Reads activity and energy, and imports weigh-ins automatically.</p>
+      </li>
+      <li>
+        <h3>Widgets, Siri, CSV export</h3>
+        <p>Home and Lock Screen widgets, Shortcuts support, and your data out whenever you want it.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>No account, no ads</h2>
+    <div class="callout">
+      <p>There is no sign-up and no login. Your food log lives on your phone, not on a server &mdash; and Calvin does not sell, share, or advertise against it.</p>
+      <p>Some features do call a server: AI photo scanning, food and barcode lookups, and the optional Fitbit, Whoop, Hevy and Google&nbsp;Health connections. The <a href="/privacy.html">privacy policy</a> sets out exactly what each one sends and what is kept.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Calvin Plus</h2>
+    <p style="margin-top:0;color:var(--muted)">An optional subscription, with a 3-day free trial. Everything above stays free whether or not you subscribe.</p>
+    <ul class="plus">
+      <li>AI meal-photo scanning &mdash; photograph a plate and get an estimate</li>
+      <li>Deeper insights into your trends</li>
+      <li>Direct connections to Fitbit, Whoop and Hevy</li>
+    </ul>
+  </section>
+
+  <footer>
+    <nav>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/support.html">Support</a>
+      <a href="mailto:support@calvinhealth.com">support@calvinhealth.com</a>
+    </nav>
+    <p>Calvin is made by Kevin Miguel Estrada&nbsp;Garcia. Food data from Open&nbsp;Food&nbsp;Facts, licensed under the Open&nbsp;Database&nbsp;License (ODbL), and from the USDA Branded Food Products Database.</p>
+  </footer>
+
+</div>
 </body>
 </html>
