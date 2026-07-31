@@ -9,6 +9,9 @@
 <meta property="og:description" content="A calorie tracker that keeps the basics free. No account. Your log stays on your phone.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://calvinhealth.com">
+<meta property="og:image" content="https://calvinhealth.com/img/dashboard.png">
+<link rel="icon" href="/img/icon.png">
+<link rel="apple-touch-icon" href="/img/icon.png">
 <style>
   /* Palette taken from the app's asset catalog so the site and the app agree:
      AccentColor #4A7C59 / #8FBF9C, LaunchBackground #F7F6F1 / #121412. */
@@ -49,10 +52,26 @@
     padding: 0 1.25rem;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 42rem; margin: 0 auto; }
+  .wrap { max-width: 60rem; margin: 0 auto; }
   a { color: var(--accent); }
 
-  header { padding: 4.5rem 0 3rem; }
+  /* Hero pairs the pitch with a real screenshot. Every app landing page worth
+     copying does this — the phone is what tells you what you're downloading.
+     Single column until there is room for the shot to be legible beside it. */
+  header {
+    padding: 4.5rem 0 3rem;
+    display: grid; gap: 3rem; align-items: center;
+  }
+  @media (min-width: 52rem) {
+    header { grid-template-columns: 1fr 20rem; gap: 4rem; }
+  }
+  .shot {
+    width: 100%; max-width: 17rem; height: auto; display: block;
+    margin: 0 auto;
+    border-radius: 1.75rem;
+    border: 1px solid var(--rule);
+    box-shadow: 0 1.5rem 3rem -1rem rgba(0,0,0,0.22);
+  }
   .mark {
     display: inline-block; font-size: 0.75rem; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem;
@@ -77,17 +96,29 @@
   }
   h3 { font-size: 1.05rem; margin: 0 0 0.35rem; font-weight: 600; }
 
-  ul.features { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.4rem; }
-  @media (min-width: 34rem) { ul.features { grid-template-columns: 1fr 1fr; gap: 1.6rem 2.5rem; } }
+  /* Numbered three-column grid. The index is a quiet ordering cue and gives
+     each cell something to hang off without needing an icon set. */
+  ul.features { list-style: none; padding: 0; margin: 0; display: grid; gap: 2rem; }
+  @media (min-width: 34rem) { ul.features { grid-template-columns: 1fr 1fr; gap: 2.2rem 2.5rem; } }
+  @media (min-width: 52rem) { ul.features { grid-template-columns: repeat(3, 1fr); gap: 2.6rem 2.75rem; } }
   ul.features p { margin: 0; color: var(--muted); font-size: 0.96rem; }
+  .idx {
+    display: block; font-size: 0.7rem; letter-spacing: 0.1em;
+    color: var(--accent); margin-bottom: 0.5rem; font-variant-numeric: tabular-nums;
+  }
+
+  /* The grid wants the full 60rem; running prose does not. Cap the measure so
+     these paragraphs stay readable at desktop width. */
+  .prose { max-width: 40rem; }
 
   .callout {
     background: var(--surface); border: 1px solid var(--rule);
     border-radius: 0.75rem; padding: 1.4rem 1.5rem;
+    max-width: 40rem;
   }
   .callout p:last-child { margin-bottom: 0; }
 
-  .plus { list-style: none; padding: 0; margin: 0; }
+  .plus { list-style: none; padding: 0; margin: 0; max-width: 40rem; }
   .plus li { padding-left: 1.3rem; position: relative; margin-bottom: 0.5rem; color: var(--muted); }
   .plus li::before { content: "+"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
 
@@ -103,45 +134,57 @@
 <div class="wrap">
 
   <header>
-    <span class="mark">Calvin for iPhone &amp; Apple&nbsp;Watch</span>
-    <h1>A calorie tracker that keeps the basics free.</h1>
-    <p class="lede">Barcode scanning and food search are free here. Most trackers moved them behind a subscription. Calvin does not.</p>
-    <a class="cta" href="#free">See what's free</a>
-    <p class="cta-note">Coming to the App&nbsp;Store.</p>
+    <div>
+      <span class="mark">Calvin for iPhone &amp; Apple&nbsp;Watch</span>
+      <h1>A calorie tracker that keeps the basics free.</h1>
+      <p class="lede">Barcode scanning and food search are free here. Most trackers moved them behind a subscription. Calvin does not.</p>
+      <a class="cta" href="#free">See what's free</a>
+      <p class="cta-note">Coming to the App&nbsp;Store.</p>
+    </div>
+    <img class="shot" src="/img/dashboard.png" width="416" height="900"
+         alt="Calvin's dashboard: a ring showing 500 kcal left, with protein, fiber and sugar bars and the day's meals below.">
   </header>
 
   <section id="free">
     <h2>Free, and staying free</h2>
     <ul class="features">
       <li>
+        <span class="idx">01</span>
         <h3>Barcode scanning</h3>
         <p>Point at a packaged food and log it. No paywall, no scan limit.</p>
       </li>
       <li>
+        <span class="idx">02</span>
         <h3>Food database search</h3>
         <p>USDA Branded, with Open&nbsp;Food&nbsp;Facts as a fallback.</p>
       </li>
       <li>
+        <span class="idx">03</span>
         <h3>Full macros</h3>
         <p>Protein, carbs, fat, fiber, sugar and sodium on every entry.</p>
       </li>
       <li>
+        <span class="idx">04</span>
         <h3>Log in under five seconds</h3>
         <p>Recents, usuals and common foods are one tap. Copy yesterday's whole log when today is empty.</p>
       </li>
       <li>
+        <span class="idx">05</span>
         <h3>Weight trend</h3>
         <p>A smoothed trend line instead of the daily noise the scale gives you.</p>
       </li>
       <li>
+        <span class="idx">06</span>
         <h3>Adaptive calorie target</h3>
         <p>Maintenance calories are back-calculated from your real weight trend, so imperfect logging self-corrects against the scale.</p>
       </li>
       <li>
+        <span class="idx">07</span>
         <h3>Apple Health sync</h3>
         <p>Reads activity and energy, and imports weigh-ins automatically.</p>
       </li>
       <li>
+        <span class="idx">08</span>
         <h3>Widgets, Siri, CSV export</h3>
         <p>Home and Lock Screen widgets, Shortcuts support, and your data out whenever you want it.</p>
       </li>
@@ -158,7 +201,7 @@
 
   <section>
     <h2>Calvin Plus</h2>
-    <p style="margin-top:0;color:var(--muted)">An optional subscription, with a 3-day free trial. Everything above stays free whether or not you subscribe.</p>
+    <p class="prose" style="margin-top:0;color:var(--muted)">An optional subscription, with a 3-day free trial. Everything above stays free whether or not you subscribe.</p>
     <ul class="plus">
       <li>AI meal-photo scanning &mdash; photograph a plate and get an estimate</li>
       <li>Deeper insights into your trends</li>
@@ -172,7 +215,7 @@
       <a href="/support.html">Support</a>
       <a href="mailto:support@calvinhealth.com">support@calvinhealth.com</a>
     </nav>
-    <p>Calvin is made by Kevin Miguel Estrada&nbsp;Garcia. Food data from Open&nbsp;Food&nbsp;Facts, licensed under the Open&nbsp;Database&nbsp;License (ODbL), and from the USDA Branded Food Products Database.</p>
+    <p class="prose">Calvin is made by Kevin Miguel Estrada&nbsp;Garcia. Food data from Open&nbsp;Food&nbsp;Facts, licensed under the Open&nbsp;Database&nbsp;License (ODbL), and from the USDA Branded Food Products Database.</p>
   </footer>
 
 </div>
