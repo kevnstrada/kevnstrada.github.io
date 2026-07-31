@@ -13,8 +13,22 @@
 <link rel="icon" href="/img/icon.png">
 <link rel="apple-touch-icon" href="/img/icon.png">
 <style>
-  /* Palette taken from the app's asset catalog so the site and the app agree:
-     AccentColor #4A7C59 / #8FBF9C, LaunchBackground #F7F6F1 / #121412. */
+  /* ---------------------------------------------------------------------
+     Design tokens, taken from the app rather than invented, so the site and
+     the product read as one thing.
+
+     Colour  — Cals/Assets.xcassets: AccentColor #4A7C59 / #8FBF9C,
+               LaunchBackground #F7F6F1 / #121412. The gold is the hue the
+               app already uses for the week rings and the sugar bar; it is
+               the only second accent and it stays on data, never on chrome.
+
+     Type    — the app is SF Pro Rounded almost everywhere (162 uses of
+               `.rounded` against 2 of `.serif`), with a serif italic
+               reserved for exactly two things: the date header and meal
+               names. The web mirrors that split: `ui-rounded` carries the
+               page, `ui-serif` italic marks sections and nothing else.
+               Figures get tabular numerals, as they do in the app.
+     --------------------------------------------------------------------- */
   :root {
     --bg: #f7f5ee;
     --surface: #fffefa;
@@ -22,112 +36,121 @@
     --muted: #6b6b60;
     --rule: #ddd8c8;
     --accent: #4a7c59;
+    --gold: #9a7d3f;
+
+    --rounded: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, system-ui, sans-serif;
+    --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino,
+             Georgia, serif;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #121412;
-      --surface: #1b1e1b;
-      --ink: #ecebe4;
-      --muted: #9c9c90;
-      --rule: #2f342f;
-      --accent: #8fbf9c;
+      --bg: #121412; --surface: #1b1e1b; --ink: #ecebe4;
+      --muted: #9c9c90; --rule: #2f342f; --accent: #8fbf9c; --gold: #c2a76a;
     }
   }
   :root[data-theme="dark"] {
     --bg: #121412; --surface: #1b1e1b; --ink: #ecebe4;
-    --muted: #9c9c90; --rule: #2f342f; --accent: #8fbf9c;
+    --muted: #9c9c90; --rule: #2f342f; --accent: #8fbf9c; --gold: #c2a76a;
   }
   :root[data-theme="light"] {
     --bg: #f7f5ee; --surface: #fffefa; --ink: #2b2b26;
-    --muted: #6b6b60; --rule: #ddd8c8; --accent: #4a7c59;
+    --muted: #6b6b60; --rule: #ddd8c8; --accent: #4a7c59; --gold: #9a7d3f;
   }
 
   * { box-sizing: border-box; }
   body {
-    font-family: -apple-system, BlinkMacSystemFont, Georgia, serif;
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.6;
-    margin: 0;
-    padding: 0 1.25rem;
+    font-family: var(--rounded);
+    background: var(--bg); color: var(--ink);
+    line-height: 1.6; margin: 0; padding: 0 1.25rem;
     -webkit-font-smoothing: antialiased;
   }
   .wrap { max-width: 60rem; margin: 0 auto; }
   a { color: var(--accent); }
+  a:focus-visible, .badge:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
+  }
 
-  /* Hero pairs the pitch with a real screenshot. Every app landing page worth
-     copying does this — the phone is what tells you what you're downloading.
-     Single column until there is room for the shot to be legible beside it. */
-  header {
-    padding: 4.5rem 0 3rem;
-    display: grid; gap: 3rem; align-items: center;
-  }
-  @media (min-width: 52rem) {
-    header { grid-template-columns: 1fr 20rem; gap: 4rem; }
-  }
-  .shot {
-    width: 100%; max-width: 17rem; height: auto; display: block;
-    margin: 0 auto;
-    border-radius: 1.75rem;
-    border: 1px solid var(--rule);
-    box-shadow: 0 1.5rem 3rem -1rem rgba(0,0,0,0.22);
-  }
-  .mark {
-    display: inline-block; font-size: 0.75rem; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem;
+  /* Hero: the pitch beside the thing itself. Stacks until the screenshot has
+     room to stay legible next to the copy. */
+  header { padding: 4.5rem 0 3.5rem; display: grid; gap: 3rem; align-items: center; }
+  @media (min-width: 52rem) { header { grid-template-columns: 1fr 19rem; gap: 4rem; } }
+
+  .eyebrow {
+    font-family: var(--serif); font-style: italic;
+    font-size: 1rem; color: var(--muted); margin: 0 0 1rem;
   }
   h1 {
-    font-style: italic; font-weight: 600; font-size: clamp(2.1rem, 7vw, 3rem);
-    line-height: 1.15; margin: 0 0 1rem;
+    font-size: clamp(2.15rem, 6vw, 3.1rem); line-height: 1.08;
+    letter-spacing: -0.022em; font-weight: 700; margin: 0 0 1.1rem;
+    text-wrap: balance;
   }
-  .lede { font-size: 1.15rem; color: var(--muted); margin: 0 0 2rem; max-width: 32rem; }
+  .lede { font-size: 1.12rem; color: var(--muted); margin: 0 0 2rem; max-width: 30rem; }
 
-  .cta {
-    display: inline-block; padding: 0.7rem 1.4rem; border-radius: 999px;
-    background: var(--accent); color: var(--bg); text-decoration: none;
-    font-weight: 600; font-size: 0.98rem;
+  .shot {
+    width: 100%; max-width: 16.5rem; height: auto; display: block; margin: 0 auto;
+    border-radius: 1.75rem; border: 1px solid var(--rule);
+    box-shadow: 0 1.5rem 3rem -1rem rgba(0,0,0,0.22);
   }
-  .cta-note { margin-top: 0.85rem; font-size: 0.9rem; color: var(--muted); }
 
-  section { padding: 2.5rem 0; border-top: 1px solid var(--rule); }
+  /* Store badge. Apple's own artwork — their guidelines do not allow a
+     redrawn one. Not a link until the app is released: the App Store URL
+     404s until then. TO ACTIVATE ON RELEASE: swap <span class="badge"> for
+     <a class="badge" href="https://apps.apple.com/app/id6790968217"> and
+     delete the .pending note. */
+  .store { display: flex; align-items: center; gap: 0.9rem; flex-wrap: wrap; }
+  .badge { display: inline-block; line-height: 0; }
+  .badge img { height: 2.75rem; width: auto; display: block; }
+  .badge[aria-disabled="true"] img { opacity: 0.4; }
+  @media (prefers-color-scheme: dark) { .badge img { filter: invert(1); } }
+  :root[data-theme="dark"] .badge img { filter: invert(1); }
+  :root[data-theme="light"] .badge img { filter: none; }
+  .pending { font-size: 0.92rem; color: var(--muted); }
+
+  section { padding: 3rem 0; border-top: 1px solid var(--rule); }
   h2 {
-    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--muted); font-weight: 600; margin: 0 0 1.25rem;
+    font-family: var(--serif); font-style: italic; font-weight: 600;
+    font-size: 1.45rem; color: var(--ink); margin: 0 0 1.75rem;
+    letter-spacing: -0.01em;
   }
-  h3 { font-size: 1.05rem; margin: 0 0 0.35rem; font-weight: 600; }
+  h3 { font-size: 1.02rem; margin: 0 0 0.3rem; font-weight: 650; letter-spacing: -0.008em; }
 
-  /* Numbered three-column grid. The index is a quiet ordering cue and gives
-     each cell something to hang off without needing an icon set. */
-  ul.features { list-style: none; padding: 0; margin: 0; display: grid; gap: 2rem; }
-  @media (min-width: 34rem) { ul.features { grid-template-columns: 1fr 1fr; gap: 2.2rem 2.5rem; } }
-  @media (min-width: 52rem) { ul.features { grid-template-columns: repeat(3, 1fr); gap: 2.6rem 2.75rem; } }
-  ul.features p { margin: 0; color: var(--muted); font-size: 0.96rem; }
-  .idx {
-    display: block; font-size: 0.7rem; letter-spacing: 0.1em;
-    color: var(--accent); margin-bottom: 0.5rem; font-variant-numeric: tabular-nums;
-  }
+  /* A feature list, not a sequence — so no numbering. Order carries nothing
+     the reader needs. */
+  ul.features { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.9rem; }
+  @media (min-width: 34rem) { ul.features { grid-template-columns: 1fr 1fr; gap: 2rem 2.5rem; } }
+  @media (min-width: 52rem) { ul.features { grid-template-columns: repeat(3, 1fr); gap: 2.4rem 2.75rem; } }
+  ul.features p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  ul.features li { border-top: 2px solid var(--rule); padding-top: 0.9rem; }
 
-  /* The grid wants the full 60rem; running prose does not. Cap the measure so
-     these paragraphs stay readable at desktop width. */
-  .prose { max-width: 40rem; }
+  .prose { max-width: 38rem; }
 
   .callout {
     background: var(--surface); border: 1px solid var(--rule);
-    border-radius: 0.75rem; padding: 1.4rem 1.5rem;
-    max-width: 40rem;
+    border-radius: 1rem; padding: 1.5rem 1.6rem; max-width: 38rem;
   }
+  .callout p { margin: 0 0 0.9rem; }
   .callout p:last-child { margin-bottom: 0; }
 
-  .plus { list-style: none; padding: 0; margin: 0; max-width: 40rem; }
-  .plus li { padding-left: 1.3rem; position: relative; margin-bottom: 0.5rem; color: var(--muted); }
-  .plus li::before { content: "+"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  /* Plus features. The gold marker is the app's own second hue, used here
+     the same way — to mark the thing that is metered. */
+  .plus { list-style: none; padding: 0; margin: 0; max-width: 38rem; }
+  .plus li { padding-left: 1.4rem; position: relative; margin-bottom: 0.55rem; color: var(--muted); }
+  .plus li::before {
+    content: ""; position: absolute; left: 0; top: 0.72em;
+    width: 0.5rem; height: 0.5rem; border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .closing { text-align: left; }
+  .closing h2 { margin-bottom: 0.6rem; }
+  .closing p { color: var(--muted); margin: 0 0 1.6rem; max-width: 30rem; }
 
   footer {
-    border-top: 1px solid var(--rule); padding: 2rem 0 3.5rem;
+    border-top: 1px solid var(--rule); padding: 2.25rem 0 3.5rem;
     font-size: 0.9rem; color: var(--muted);
   }
-  footer nav { margin-bottom: 0.75rem; }
-  footer nav a { margin-right: 1.25rem; }
+  footer nav { margin-bottom: 0.9rem; display: flex; flex-wrap: wrap; gap: 1.25rem; }
 </style>
 </head>
 <body>
@@ -135,56 +158,52 @@
 
   <header>
     <div>
-      <span class="mark">Calvin for iPhone &amp; Apple&nbsp;Watch</span>
+      <p class="eyebrow">for iPhone &amp; Apple&nbsp;Watch</p>
       <h1>A calorie tracker that keeps the basics free.</h1>
       <p class="lede">Barcode scanning and food search are free here. Most trackers moved them behind a subscription. Calvin does not.</p>
-      <a class="cta" href="#free">See what's free</a>
-      <p class="cta-note">Coming to the App&nbsp;Store.</p>
+      <div class="store">
+        <span class="badge" aria-disabled="true">
+          <img src="/img/app-store-badge.svg" alt="Download on the App Store" width="120" height="40">
+        </span>
+        <span class="pending">Coming soon</span>
+      </div>
     </div>
     <img class="shot" src="/img/dashboard.png" width="416" height="900"
-         alt="Calvin's dashboard: a ring showing 500 kcal left, with protein, fiber and sugar bars and the day's meals below.">
+         alt="Calvin's dashboard: a ring showing 500 kcal left of the day's target, with protein, fiber and sugar bars and the day's meals listed below.">
   </header>
 
   <section id="free">
     <h2>Free, and staying free</h2>
     <ul class="features">
       <li>
-        <span class="idx">01</span>
         <h3>Barcode scanning</h3>
         <p>Point at a packaged food and log it. No paywall, no scan limit.</p>
       </li>
       <li>
-        <span class="idx">02</span>
         <h3>Food database search</h3>
         <p>USDA Branded, with Open&nbsp;Food&nbsp;Facts as a fallback.</p>
       </li>
       <li>
-        <span class="idx">03</span>
         <h3>Full macros</h3>
         <p>Protein, carbs, fat, fiber, sugar and sodium on every entry.</p>
       </li>
       <li>
-        <span class="idx">04</span>
         <h3>Log in under five seconds</h3>
         <p>Recents, usuals and common foods are one tap. Copy yesterday's whole log when today is empty.</p>
       </li>
       <li>
-        <span class="idx">05</span>
         <h3>Weight trend</h3>
         <p>A smoothed trend line instead of the daily noise the scale gives you.</p>
       </li>
       <li>
-        <span class="idx">06</span>
         <h3>Adaptive calorie target</h3>
         <p>Maintenance calories are back-calculated from your real weight trend, so imperfect logging self-corrects against the scale.</p>
       </li>
       <li>
-        <span class="idx">07</span>
         <h3>Apple Health sync</h3>
         <p>Reads activity and energy, and imports weigh-ins automatically.</p>
       </li>
       <li>
-        <span class="idx">08</span>
         <h3>Widgets, Siri, CSV export</h3>
         <p>Home and Lock Screen widgets, Shortcuts support, and your data out whenever you want it.</p>
       </li>
@@ -209,13 +228,24 @@
     </ul>
   </section>
 
+  <section class="closing">
+    <h2>Log your first meal in five seconds</h2>
+    <p>Free to start, no account to make.</p>
+    <div class="store">
+      <span class="badge" aria-disabled="true">
+        <img src="/img/app-store-badge.svg" alt="Download on the App Store" width="120" height="40">
+      </span>
+      <span class="pending">Coming soon</span>
+    </div>
+  </section>
+
   <footer>
     <nav>
       <a href="/privacy.html">Privacy</a>
       <a href="/support.html">Support</a>
       <a href="mailto:support@calvinhealth.com">support@calvinhealth.com</a>
     </nav>
-    <p class="prose">Calvin is made by Kevin Miguel Estrada&nbsp;Garcia. Food data from Open&nbsp;Food&nbsp;Facts, licensed under the Open&nbsp;Database&nbsp;License (ODbL), and from the USDA Branded Food Products Database.</p>
+    <p class="prose">Calvin is made by Kevin Miguel Estrada&nbsp;Garcia. Food data from Open&nbsp;Food&nbsp;Facts, licensed under the Open Database License (ODbL), and from the USDA Branded Food Products Database.</p>
   </footer>
 
 </div>
